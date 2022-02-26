@@ -1,7 +1,7 @@
 ---
 title: "Assignment1 - Eli Lauwers"
 output: 
-  html_document:
+  rmarkdown::github_document:
     number_sections: true
 ---
 
@@ -146,3 +146,7 @@ Yes, this is possible. For the `contracts`-table, the primary key is a combined 
 Next, there is a constraint on the `contract`-table that a new row must always have a begin date that is prior to the end date. That condition is met in this test row
 
 **Answer**: Yes, we can safely add the new row
+
+# Imagine
+
+Imagine that the designers of the rollsrobin database would have left out the employee table from the relational schema. Instead, all data related to employees would then be stored in the person table (which would include an extra column employeenumber). The foreign key in the table contract, originally pointing to the employee table, would then point to the column employeenumber in the person table. What are possible (dis)advantages of this approach? Explain in your own words.
