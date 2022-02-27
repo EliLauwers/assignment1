@@ -1,0 +1,13 @@
+FROM registration r
+SELECT 
+/* Select all columns */
+*, 
+/* Add the month name in lowercase (used for checking) */
+to_char(r.period_begin,'month') as period_month 
+LEFT JOIN car c USING(license_plate)
+LEFT JOIN branch b USING(enterprisenumber)
+LEFT JOIN person p USING(email)
+WHERE 
+/* Reverse the lowercase month name and take the first letter */
+/* Then, check if that letter is 'r' */
+substr(reverse(to_char(r.period_begin,'month')),1,1) = 'r' 

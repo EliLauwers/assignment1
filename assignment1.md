@@ -223,3 +223,55 @@ would include an extra column employeenumber). The foreign key in the
 table contract, originally pointing to the employee table, would then
 point to the column employeenumber in the person table. What are
 possible (dis)advantages of this approach? Explain in your own words.
+
+disadvantage: the `employeenumber` in the `person`-table must become
+optional, as basic csutomers will not have an employeenumber. In that
+sense, it is crucial that an employee can only be made with an
+employeenumber, which is a check that has to be done by the form which
+creates new employees.
+
+**Answer**: I would advise against the integration of the `employee` and
+`person` tables
+
+# 4 Basic SQL
+
+``` sql
+SELECT DISTINCT
+p.email
+FROM registration r
+LEFT JOIN car c USING(license_plate)
+LEFT JOIN branch b USING(enterprisenumber)
+LEFT JOIN person p USING(email)
+WHERE 
+/* Reverse the lowercase month name and take the first letter */
+/* Then, check if that letter is 'r' */
+substr(reverse(to_char(r.period_begin,'month')),1,1) = 'r' AND 
+/* for every branch and person, calculate the sum of elements in the year field */
+/* Next, compare both and retain those where elements are equal */
+(cast(substr(p.postalcode, 1, 1) as integer) + 
+cast(substr(p.postalcode, 2, 1) as integer) + 
+cast(substr(p.postalcode, 3, 1) as integer) + 
+cast(substr(p.postalcode, 4, 1) as integer)) = 
+(cast(substr(b.postalcode, 1, 1) as integer) + 
+cast(substr(b.postalcode, 2, 1) as integer) + 
+cast(substr(b.postalcode, 3, 1) as integer) + 
+cast(substr(b.postalcode, 4, 1) as integer))
+```
+
+<div class="knitsql-table">
+
+| email                          |
+|:-------------------------------|
+| <abdoultenny@outlook.com>      |
+| <areen-waberer@hotmail.com>    |
+| <dorian@claisse.com>           |
+| <elouise@jon.nl>               |
+| <gregory_winspear@yahoo.com>   |
+| <halima-frudd@gmail.com>       |
+| <jasmeet.rudinger@outlook.com> |
+| <maybel_quaife@mail.be>        |
+| <roberts_oattes@yahoo.com>     |
+
+9 records
+
+</div>

@@ -1,0 +1,17 @@
+Advantages: 
+
+- More data on employees can be stored. Right now, only an email adress is stored for an employee, whereas an email adress is stored for a general person, as well as information on a persons name and location. Integrating the `employee` and `person` tables means that more information on employees can be stored.
+- Easier joining. Right now, two joins must be performed when 
+- People cannot be duplicated. People can be employee and customer at the same time (see the arrow pointing from the `registration`-table to both tables). 
+- Unique check on email adresses
+
+
+Disadvantages:
+
+- Additional constraints must be made on th  `person`-table, as more data on employees can be stored. This disadvantage echoes the first advantage above. Let's say that there is a company policy to store email adresses for employees as the only form of stored personal information. In that case, integrating the `employee` and `person` tables means that all columns besides the `email`-column must become optional for employees. Some additional constraints then must be created for the `person` table. These constraints are by no means complex, but are necessary to garantee that correct information is stored for every person. THe following constraints must be added to the `person`-table
+  * For customers (the employeenumber is `null`),  the row must have values in every column beside the `employeenumber`. 
+  * For employees (the employeenumber is not `null`), the row can only have values for the `email` and `employeenumber` columns. 
+
+- A person cannot be customer and employee at the same time. Given the arrow pointing from the `registration`-table to both `employee` and `person` tables, I assume that a person can be customer and employee at the same time. However, in the case of integrating the `person` and `employee` tables, it becomes difficult to be a customer and employee under the same email adress, as company policy would be breached when storing 'customer-information' for an employee.
+
+**Final Answer (Recommendation)**: It is advised to integrate the `employee`-table in the `person`-table. It must however be known that the integration of both tables comes with the cost of more data being stored for the employees who are customer at the same time.

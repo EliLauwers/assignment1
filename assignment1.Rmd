@@ -150,3 +150,15 @@ Next, there is a constraint on the `contract`-table that a new row must always h
 # Imagine
 
 Imagine that the designers of the rollsrobin database would have left out the employee table from the relational schema. Instead, all data related to employees would then be stored in the person table (which would include an extra column employeenumber). The foreign key in the table contract, originally pointing to the employee table, would then point to the column employeenumber in the person table. What are possible (dis)advantages of this approach? Explain in your own words.
+
+disadvantage: the `employeenumber` in the `person`-table must become optional, as basic csutomers will not have an employeenumber. In that sense, it is crucial that an employee can only be made with an employeenumber, which is a check that has to be done by the form which creates new employees.
+ 
+**Answer**: I would advise against the integration of the `employee` and `person` tables
+
+# Basic SQL
+
+```{sql first exercise,code=readLines("01504786_Eli_Lauwers_1.sql"),connection=con}
+
+```
+
+
