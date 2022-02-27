@@ -270,16 +270,17 @@ WHERE
   cast(substr(b.postalcode, 4, 1) as integer))
 ```
 
-    ##                          email
-    ## 1      abdoultenny@outlook.com
-    ## 2    areen-waberer@hotmail.com
-    ## 3           dorian@claisse.com
-    ## 4               elouise@jon.nl
-    ## 5   gregory_winspear@yahoo.com
-    ## 6       halima-frudd@gmail.com
-    ## 7 jasmeet.rudinger@outlook.com
-    ## 8        maybel_quaife@mail.be
-    ## 9     roberts_oattes@yahoo.com
+| email                          |
+|:-------------------------------|
+| <abdoultenny@outlook.com>      |
+| <areen-waberer@hotmail.com>    |
+| <dorian@claisse.com>           |
+| <elouise@jon.nl>               |
+| <gregory_winspear@yahoo.com>   |
+| <halima-frudd@gmail.com>       |
+| <jasmeet.rudinger@outlook.com> |
+| <maybel_quaife@mail.be>        |
+| <roberts_oattes@yahoo.com>     |
 
 ## 4.2 Rentals during contract time
 
@@ -310,14 +311,15 @@ ORDER BY
 e.email asc
 ```
 
-    ##                        email
-    ## 1  ammaarwhotton@hotmail.com
-    ## 2     fiachrafrankema@msn.be
-    ## 3 krissie-stopps@outlook.com
-    ## 4  layahscroxton@hotmail.com
-    ## 5  manal.peckitt@hotmail.com
-    ## 6    matthewroydon@yahoo.com
-    ## 7        milou_oakden@msn.be
+| email                        |
+|:-----------------------------|
+| <ammaarwhotton@hotmail.com>  |
+| <fiachrafrankema@msn.be>     |
+| <krissie-stopps@outlook.com> |
+| <layahscroxton@hotmail.com>  |
+| <manal.peckitt@hotmail.com>  |
+| <matthewroydon@yahoo.com>    |
+| <milou_oakden@msn.be>        |
 
 ## 4.3 Unregistered locations
 
@@ -342,10 +344,11 @@ WHERE
   cast(l.postalcode as integer) % 2 = 0
 ```
 
-    ##   postalcode   municipality
-    ## 1       8430    Middelkerke
-    ## 2       4780     Sankt Vith
-    ## 3       1820 Steenokkerzeel
+| postalcode | municipality   |
+|:-----------|:---------------|
+| 8430       | Middelkerke    |
+| 4780       | Sankt Vith     |
+| 1820       | Steenokkerzeel |
 
 ## 4.4 Number of parts in municipality
 
@@ -359,36 +362,37 @@ space (“ ”).
 SELECT 
   l.postalcode,
   l.municipality,
-  length(l.municipality) - length(replace(replace(l.municipality, '-', ''), ' ','')) + 1 as numberlocation
+  length(l.municipality) - length(replace(replace(l.municipality, '-', ''), ' ','')) + 1 as number
 FROM location l
 ```
 
-    ##    postalcode               municipality numberlocation
-    ## 1        2870                      Puurs              1
-    ## 2        4170           Comblain-au-Pont              3
-    ## 3        4031                    Lüttich              1
-    ## 4        6230              Pont-à-Celles              3
-    ## 5        6832                   Bouillon              1
-    ## 6        2800                   Mechelen              1
-    ## 7        1670                   Pepingen              1
-    ## 8        2840                      Rumst              1
-    ## 9        8957                      Mesen              1
-    ## 10       8434                Middelkerke              1
-    ## 11       8510                   Kortrijk              1
-    ## 12       8930                      Menin              1
-    ## 13       1341 Ottignies-Louvain-la-Neuve              4
-    ## 14       6593                  Momignies              1
-    ## 15       1476                   Genepiën              1
-    ## 16       7548                    Doornik              1
-    ## 17       9700                  Audenarde              1
-    ## 18       8755                  Ruiselede              1
-    ## 19       8904                      Ypres              1
-    ## 20       1410                   Waterloo              1
-    ## 21       8572                    Anzegem              1
-    ## 22       3840                   Borgloon              1
-    ## 23       4432                        Ans              1
-    ## 24       4000                      Liège              1
-    ## 25       1400                     Nijvel              1
+| postalcode | municipality               | number |
+|:-----------|:---------------------------|-------:|
+| 2870       | Puurs                      |      1 |
+| 4170       | Comblain-au-Pont           |      3 |
+| 4031       | Lüttich                    |      1 |
+| 6230       | Pont-à-Celles              |      3 |
+| 6832       | Bouillon                   |      1 |
+| 2800       | Mechelen                   |      1 |
+| 1670       | Pepingen                   |      1 |
+| 2840       | Rumst                      |      1 |
+| 8957       | Mesen                      |      1 |
+| 8434       | Middelkerke                |      1 |
+| 8510       | Kortrijk                   |      1 |
+| 8930       | Menin                      |      1 |
+| 1341       | Ottignies-Louvain-la-Neuve |      4 |
+| 6593       | Momignies                  |      1 |
+| 1476       | Genepiën                   |      1 |
+| 7548       | Doornik                    |      1 |
+| 9700       | Audenarde                  |      1 |
+| 8755       | Ruiselede                  |      1 |
+| 8904       | Ypres                      |      1 |
+| 1410       | Waterloo                   |      1 |
+| 8572       | Anzegem                    |      1 |
+| 3840       | Borgloon                   |      1 |
+| 4432       | Ans                        |      1 |
+| 4000       | Liège                      |      1 |
+| 1400       | Nijvel                     |      1 |
 
 ## 4.5 Customer pairs
 
@@ -419,55 +423,30 @@ LEFT JOIN registration r2 ON r1.email = r2.email AND
 WHERE r2.license_plate IS NOT null
 ```
 
-    ##                           email license_plate1 period_begin1 license_plate2
-    ## 1             aluna@bulleyn.com      1-PZR-102    2018-08-08      1-YCA-352
-    ## 2       aariz_drewell@yahoo.com      1-PZR-102    2017-07-03      1-BQE-096
-    ## 3  winifred.gellert@outlook.com      1-PZR-102    2017-01-15      1-BUL-570
-    ## 4  winifred.gellert@outlook.com      1-PZR-102    2017-01-15      1-POI-917
-    ## 5  winifred.gellert@outlook.com      1-PZR-102    2017-01-15      1-TRL-351
-    ## 6  winifred.gellert@outlook.com      1-PZR-102    2017-01-15      1-BCG-366
-    ## 7  winifred.gellert@outlook.com      1-PZR-102    2017-01-15      1-SVZ-211
-    ## 8  winifred.gellert@outlook.com      1-PZR-102    2017-01-15      1-GXK-887
-    ## 9  winifred.gellert@outlook.com      1-PZR-102    2017-01-15      1-FZS-779
-    ## 10     alexis_ahearne@yahoo.com      1-IZX-389    2018-09-03      1-XFT-243
-    ## 11       heela-harses@gmail.com      1-IZX-389    2018-01-13      1-ZFO-950
-    ## 12       heela-harses@gmail.com      1-IZX-389    2018-01-13      1-OBQ-352
-    ## 13       heela-harses@gmail.com      1-IZX-389    2018-01-13      1-WZC-412
-    ## 14       heela-harses@gmail.com      1-IZX-389    2018-01-13      1-HEW-250
-    ## 15       heela-harses@gmail.com      1-IZX-389    2018-01-13      1-BUP-153
-    ## 16 mitchel.pengelly@outlook.com      1-IZX-389    2018-08-16      1-VLZ-903
-    ## 17 iyla-mae.burgisi@outlook.com      1-IZX-389    2018-08-10      1-ZAI-317
-    ## 18 iyla-mae.burgisi@outlook.com      1-IZX-389    2018-08-10      1-QMT-716
-    ## 19 iyla-mae.burgisi@outlook.com      1-IZX-389    2018-08-10      1-TZS-216
-    ## 20        fausta-sparrow@msn.be      1-IZX-389    2017-12-18      1-CRI-027
-    ## 21        fausta-sparrow@msn.be      1-IZX-389    2017-12-18      1-VRM-549
-    ## 22        fausta-sparrow@msn.be      1-IZX-389    2017-12-18      1-THX-072
-    ## 23           jawahir@daelman.be      1-PPA-110    2017-05-17      1-LWY-156
-    ## 24           jawahir@daelman.be      1-PPA-110    2017-05-17      1-OQQ-410
-    ## 25           jawahir@daelman.be      1-PPA-110    2017-05-17      1-DCC-344
-    ##    period_begin2
-    ## 1     2018-08-08
-    ## 2     2018-08-22
-    ## 3     2018-06-30
-    ## 4     2017-06-08
-    ## 5     2017-01-15
-    ## 6     2018-06-30
-    ## 7     2018-06-30
-    ## 8     2017-08-28
-    ## 9     2018-06-30
-    ## 10    2018-09-03
-    ## 11    2018-01-13
-    ## 12    2018-01-13
-    ## 13    2018-08-26
-    ## 14    2018-10-24
-    ## 15    2018-11-27
-    ## 16    2018-09-23
-    ## 17    2018-11-09
-    ## 18    2018-08-10
-    ## 19    2018-08-10
-    ## 20    2018-04-21
-    ## 21    2018-04-09
-    ## 22    2018-04-09
-    ## 23    2018-06-05
-    ## 24    2018-06-02
-    ## 25    2018-07-24
+| email                          | license\_plate1 | period\_begin1 | license\_plate2 | period\_begin2 |
+|:-------------------------------|:----------------|:---------------|:----------------|:---------------|
+| <aluna@bulleyn.com>            | 1-PZR-102       | 2018-08-08     | 1-YCA-352       | 2018-08-08     |
+| <aariz_drewell@yahoo.com>      | 1-PZR-102       | 2017-07-03     | 1-BQE-096       | 2018-08-22     |
+| <winifred.gellert@outlook.com> | 1-PZR-102       | 2017-01-15     | 1-BUL-570       | 2018-06-30     |
+| <winifred.gellert@outlook.com> | 1-PZR-102       | 2017-01-15     | 1-POI-917       | 2017-06-08     |
+| <winifred.gellert@outlook.com> | 1-PZR-102       | 2017-01-15     | 1-TRL-351       | 2017-01-15     |
+| <winifred.gellert@outlook.com> | 1-PZR-102       | 2017-01-15     | 1-BCG-366       | 2018-06-30     |
+| <winifred.gellert@outlook.com> | 1-PZR-102       | 2017-01-15     | 1-SVZ-211       | 2018-06-30     |
+| <winifred.gellert@outlook.com> | 1-PZR-102       | 2017-01-15     | 1-GXK-887       | 2017-08-28     |
+| <winifred.gellert@outlook.com> | 1-PZR-102       | 2017-01-15     | 1-FZS-779       | 2018-06-30     |
+| <alexis_ahearne@yahoo.com>     | 1-IZX-389       | 2018-09-03     | 1-XFT-243       | 2018-09-03     |
+| <heela-harses@gmail.com>       | 1-IZX-389       | 2018-01-13     | 1-ZFO-950       | 2018-01-13     |
+| <heela-harses@gmail.com>       | 1-IZX-389       | 2018-01-13     | 1-OBQ-352       | 2018-01-13     |
+| <heela-harses@gmail.com>       | 1-IZX-389       | 2018-01-13     | 1-WZC-412       | 2018-08-26     |
+| <heela-harses@gmail.com>       | 1-IZX-389       | 2018-01-13     | 1-HEW-250       | 2018-10-24     |
+| <heela-harses@gmail.com>       | 1-IZX-389       | 2018-01-13     | 1-BUP-153       | 2018-11-27     |
+| <mitchel.pengelly@outlook.com> | 1-IZX-389       | 2018-08-16     | 1-VLZ-903       | 2018-09-23     |
+| <iyla-mae.burgisi@outlook.com> | 1-IZX-389       | 2018-08-10     | 1-ZAI-317       | 2018-11-09     |
+| <iyla-mae.burgisi@outlook.com> | 1-IZX-389       | 2018-08-10     | 1-QMT-716       | 2018-08-10     |
+| <iyla-mae.burgisi@outlook.com> | 1-IZX-389       | 2018-08-10     | 1-TZS-216       | 2018-08-10     |
+| <fausta-sparrow@msn.be>        | 1-IZX-389       | 2017-12-18     | 1-CRI-027       | 2018-04-21     |
+| <fausta-sparrow@msn.be>        | 1-IZX-389       | 2017-12-18     | 1-VRM-549       | 2018-04-09     |
+| <fausta-sparrow@msn.be>        | 1-IZX-389       | 2017-12-18     | 1-THX-072       | 2018-04-09     |
+| <jawahir@daelman.be>           | 1-PPA-110       | 2017-05-17     | 1-LWY-156       | 2018-06-05     |
+| <jawahir@daelman.be>           | 1-PPA-110       | 2017-05-17     | 1-OQQ-410       | 2018-06-02     |
+| <jawahir@daelman.be>           | 1-PPA-110       | 2017-05-17     | 1-DCC-344       | 2018-07-24     |

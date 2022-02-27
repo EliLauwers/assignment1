@@ -169,7 +169,7 @@ Construct a list of unique email addresses of all persons who did a registration
 
 ```{r,echo=FALSE}
 write.csv(df1,"csv_tables/df1.csv")
-head(df1,printlines)
+knitr::kable(head(df1,printlines),format="markdown")
 ```
 
 ## Rentals during contract time
@@ -183,7 +183,7 @@ Construct a list of unique email addresses of all employees who rented a car at 
 
 ```{r,echo=FALSE}
 write.csv(df2,"csv_tables/df2.csv")
-head(df2,printlines)
+knitr::kable(head(df2,printlines),format="markdown")
 ```
 
 ## Unregistered locations
@@ -196,7 +196,7 @@ Construct a list of locations (postal code and municipality) in which each locat
 
 ```{r,echo=FALSE}
 write.csv(df3,"csv_tables/df3.csv")
-head(df3,printlines)
+knitr::kable(head(df3,printlines),format="markdown")
 ```
 
 ## Number of parts in municipality
@@ -209,7 +209,7 @@ Give for each location in the database (uniquely defined by postalcode and munic
 
 ```{r,echo=FALSE}
 write.csv(df4,"csv_tables/df4.csv")
-head(df4,printlines)
+knitr::kable(head(df4,printlines),format="markdown")
 ```
 
 ## Customer pairs
@@ -222,6 +222,6 @@ Give all possible couples of registrations that were done by the same person (i.
 
 ```{r, echo=FALSE}
 write.csv(df5,"csv_tables/df5.csv")
-head(df5,printlines)
+knitr::kable(head(df5,printlines),format="markdown")
 ```
 
