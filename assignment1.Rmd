@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r conncet_db, include=FALSE}
+```{r connect_db, include=FALSE}
 con = RPostgres::dbConnect(
   RPostgres::Postgres(),
   dbname = "rollsrobin_databases",
