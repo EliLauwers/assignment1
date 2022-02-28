@@ -20,12 +20,11 @@ explanation for both.
 2.  If two different names in `branch.name` are considered two different
     branches, then the answer is ‘yes, multiple locations can be
     assigned to one branch’. There is no constraint on the `branch.name`
-    column, so two rows might exist with identical `branch.name`.
-
-Every enterprise -or row- in the `branch` table has a location given by
-`branch.postalcode` and `branch.municipality`. If there are two rows
-with the same name and different locations, then we have a situation
-where multiple locations are assigned to the same branch.
+    column, so two rows might exist with identical `branch.name`. Every
+    enterprise -or row- in the `branch` table has a location given by
+    `branch.postalcode` and `branch.municipality`. If there are two rows
+    with the same name and different locations, then we have a situation
+    where multiple locations are assigned to the same branch.
 
 I consider (2) to be the most logical case for this exercise. My final
 answer follows (2)
@@ -41,8 +40,9 @@ primary key must be unique. There is however no constraint that every
 
 Next, we know from the relational schema that locations are stored for
 the branches as well as for the employee working for those branches. If
-every location must be linked to a branch, than branch employees can
-only live in the location of a branch, which would be quite stupid.
+every location should have to be linked to a branch, than branch
+employees can only live in the location of a branch, which would be
+quite stupid.
 
 **Answer**: Yes, it is possible to store locations not linked to a
 branch.
@@ -73,7 +73,7 @@ brand, both fiat models will be joined to only one car.
 
 If this assumption is true, than in the result of the query we will see
 identical numberplates linked to multiple distinct carmodels, which
-shouldn’t be possible. I looked around and qquickly found proof for this
+shouldn’t be possible. I looked around and quickly found proof for this
 hypthesis:
 
 ``` sql
@@ -134,6 +134,11 @@ SELECT * FROM contract c1
     AND c1.period_begin < c2.period_begin
 WHERE c2.period_begin IS NULL;
 ```
+
+Explain, in your own words, what this SELECT-query achieves. You should
+not give the result table of this query or explain this query in
+technical terms, but explain what the semantical outcome is of this
+query when executed on data that is stored in the rollsrobin database.
 
 The asterisk sign at the start of the query means that every column from
 the resulting table will be selected and that no columns will be
@@ -225,7 +230,7 @@ point to the column employeenumber in the person table. What are
 possible (dis)advantages of this approach? Explain in your own words.
 
 disadvantage: the `employeenumber` in the `person`-table must become
-optional, as basic csutomers will not have an employeenumber. In that
+optional, as basic customers will not have an employeenumber. In that
 sense, it is crucial that an employee can only be made with an
 employeenumber, which is a check that has to be done by the form which
 creates new employees.
