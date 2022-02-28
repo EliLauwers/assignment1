@@ -3,15 +3,18 @@ title: "Assignment1 - Eli Lauwers"
 output: 
   rmarkdown::github_document:
     number_sections: true
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE}
+library("DBI")
+library("readr") 
+
 knitr::opts_chunk$set(
   echo = TRUE
 )
-```
 
-```{r connect_db, include=FALSE}
 con = RPostgres::dbConnect(
   RPostgres::Postgres(),
   dbname = "rollsrobin_databases",
@@ -163,11 +166,12 @@ disadvantage: the `employeenumber` in the `person`-table must become optional, a
 
 Construct a list of unique email addresses of all persons who did a registration for which (1) the rented car is owned by a branch for which the sum of the numbers in the branches postal code (branch.postalcode) equals the sum of the numbers in the postal code of the person, who rented the car (person.postalcode), and (2) the first date of the rental period (registration.period_begin) is in a month which name ends with letter ‘r’ (in English). You may assume that all postal codes consist of 4 digits between 0 and 9. In the result table, we expect one column with name email of datatype varchar.
 
-```{sql first exercise,code=readLines("01504786_Eli_Lauwers_1.sql"),connection=con,output.var="df1"}
+```{sql first exercise,code=readLines("01504786_Eli_Lauwers_1.sql"),connection=con,eval=F}
 
 ```
 
 ```{r,echo=FALSE}
+df1 = dbGetQuery(con, statement = read_file("01504786_Eli_Lauwers_1.sql"))
 write.csv(df1,"csv_tables/df1.csv")
 knitr::kable(head(df1,printlines),format="markdown")
 ```
@@ -177,11 +181,12 @@ knitr::kable(head(df1,printlines),format="markdown")
 Construct a list of unique email addresses of all employees who rented a car at a company at which they have worked. Moreover, the first date of the rental period should fall within the period they were working at the company (i.e. registration.period_begin should be between contract.period_begin and contract.period_end, boundaries inclusive). In the result table, we expect one column with name email of datatype varchar. Order the results in this table alphabetically according to the values in the column email. 
 
 
-```{sql second exercise,code=readLines("01504786_Eli_Lauwers_2.sql"),connection=con,output.var="df2"}
+```{sql second exercise,code=readLines("01504786_Eli_Lauwers_2.sql"),connection=con,eval=F}
 
 ```
 
 ```{r,echo=FALSE}
+df2 = dbGetQuery(con, statement = read_file("01504786_Eli_Lauwers_2.sql"))
 write.csv(df2,"csv_tables/df2.csv")
 knitr::kable(head(df2,printlines),format="markdown")
 ```
@@ -190,11 +195,12 @@ knitr::kable(head(df2,printlines),format="markdown")
 
 Construct a list of locations (postal code and municipality) in which each location (1) is not registered as a residence of a person in the database, (2) has an even postal code and (3) does not start with letter ‘B’ (case insensitive). In the result table, we expect two columns with corresponding datatype: postalcode (varchar) and municipality (varchar).
 
-```{sql third exercise,code=readLines("01504786_Eli_Lauwers_3.sql"),connection=con,output.var="df3"}
+```{sql third exercise,code=readLines("01504786_Eli_Lauwers_3.sql"),connection=con,eval=F}
 
 ```
 
 ```{r,echo=FALSE}
+df3 = dbGetQuery(con, statement = read_file("01504786_Eli_Lauwers_3.sql"))
 write.csv(df3,"csv_tables/df3.csv")
 knitr::kable(head(df3,printlines),format="markdown")
 ```
@@ -203,11 +209,12 @@ knitr::kable(head(df3,printlines),format="markdown")
 
 Give for each location in the database (uniquely defined by postalcode and municipality), the number of parts that make up the name of the municipality. Here, a part is defined as a substring of the municipality that is separated from other substrings by either a hyphen (“-”) or a space (“ ”).
 
-```{sql fourth exercise,code=readLines("01504786_Eli_Lauwers_4.sql"),connection=con,output.var="df4"}
+```{sql fourth exercise,code=readLines("01504786_Eli_Lauwers_4.sql"),connection=con,eval=F}
 
 ```
 
 ```{r,echo=FALSE}
+df4 = dbGetQuery(con, statement = read_file("01504786_Eli_Lauwers_4.sql"))
 write.csv(df4,"csv_tables/df4.csv")
 knitr::kable(head(df4,printlines),format="markdown")
 ```
@@ -216,12 +223,12 @@ knitr::kable(head(df4,printlines),format="markdown")
 
 Give all possible couples of registrations that were done by the same person (i.e. the table that is returned by your query should contain rows consisting of two registrations that were conducted by the same person). Be aware of the fact that no rows may be present in your result that contain two identical registrations (i.e. same person, car, begin date and end date)! In order to prevent this, the value in column period_begin of the first registration should be chronologically strict before the value in column period_begin of the second registration. However, if this value is the same for the two registrations, the value in column license_plate of the first registration should come alphabetically strict before the value in column license_plate of the second registration.
 
-```{sql fifth exercise,code=readLines("01504786_Eli_Lauwers_5.sql"),connection=con,output.var="df5"}
+```{sql fifth exercise,code=readLines("01504786_Eli_Lauwers_5.sql"),connection=con,eval=F}
 
 ```
 
-```{r, echo=FALSE}
+```{r,echo=FALSE}
+df5 = dbGetQuery(con, statement = read_file("01504786_Eli_Lauwers_5.sql"))
 write.csv(df5,"csv_tables/df5.csv")
 knitr::kable(head(df5,printlines),format="markdown")
 ```
-
