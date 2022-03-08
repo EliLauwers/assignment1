@@ -10,11 +10,11 @@ WHERE
   substr(reverse(to_char(r.period_begin,'month')),1,1) = 'r' AND 
   /* for every branch and person, calculate the sum of elements in the year field */
   /* Next, compare both and retain those where elements are equal */
-  (cast(substr(p.postalcode, 1, 1) as integer) + 
-  cast(substr(p.postalcode, 2, 1) as integer) + 
-  cast(substr(p.postalcode, 3, 1) as integer) + 
-  cast(substr(p.postalcode, 4, 1) as integer)) = 
-  (cast(substr(b.postalcode, 1, 1) as integer) + 
-  cast(substr(b.postalcode, 2, 1) as integer) + 
-  cast(substr(b.postalcode, 3, 1) as integer) + 
-  cast(substr(b.postalcode, 4, 1) as integer))
+  ((substr(p.postalcode, 1, 1)::integer) + 
+  (substr(p.postalcode, 2, 1)::integer) + 
+  (substr(p.postalcode, 3, 1)::integer) + 
+  (substr(p.postalcode, 4, 1)::integer)) = 
+  ((substr(b.postalcode, 1, 1)::integer) + 
+  (substr(b.postalcode, 2, 1)::integer) + 
+  (substr(b.postalcode, 3, 1)::integer) + 
+  (substr(b.postalcode, 4, 1)::integer))

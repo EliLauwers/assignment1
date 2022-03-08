@@ -265,14 +265,14 @@ WHERE
   substr(reverse(to_char(r.period_begin,'month')),1,1) = 'r' AND 
   /* for every branch and person, calculate the sum of elements in the year field */
   /* Next, compare both and retain those where elements are equal */
-  (cast(substr(p.postalcode, 1, 1) as integer) + 
-  cast(substr(p.postalcode, 2, 1) as integer) + 
-  cast(substr(p.postalcode, 3, 1) as integer) + 
-  cast(substr(p.postalcode, 4, 1) as integer)) = 
-  (cast(substr(b.postalcode, 1, 1) as integer) + 
-  cast(substr(b.postalcode, 2, 1) as integer) + 
-  cast(substr(b.postalcode, 3, 1) as integer) + 
-  cast(substr(b.postalcode, 4, 1) as integer))
+  ((substr(p.postalcode, 1, 1)::integer) + 
+  (substr(p.postalcode, 2, 1)::integer) + 
+  (substr(p.postalcode, 3, 1)::integer) + 
+  (substr(p.postalcode, 4, 1)::integer)) = 
+  ((substr(b.postalcode, 1, 1)::integer) + 
+  (substr(b.postalcode, 2, 1)::integer) + 
+  (substr(b.postalcode, 3, 1)::integer) + 
+  (substr(b.postalcode, 4, 1)::integer))
 ```
 
 | email                          |
@@ -299,14 +299,18 @@ varchar. Order the results in this table alphabetically according to the
 values in the column email.
 
 ``` sql
-SELECT DISTINCT
-e.email
+SELECT DISTINCT e.email
 FROM registration r
-LEFT JOIN employee e USING(email)
+/* INNER JOIN ensures that the resulting table 
+is a combination of all registrations by employees */
+INNER JOIN employee e USING(email)
+/* LEFT JOIN ensures that every employee-rental is 
+matched with all contracts for that employee */
 LEFT JOIN contract con USING(employeenumber)
 LEFT JOIN car c USING(license_plate)
 WHERE
-/* Select only if both enterpisenumbers are identical */
+/* Select only if enterprisenumbers for contract and rental car are identical */
+/* Ensures that a car was rented from a branch where a contract was present */
 c.enterprisenumber = con.enterprisenumber AND
 /* Select only if the rental period lays inside the contract interval */
 con.period_begin <= r.period_begin AND
