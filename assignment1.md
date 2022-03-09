@@ -259,13 +259,17 @@ LEFT JOIN car c USING(license_plate)
 LEFT JOIN branch b USING(enterprisenumber)
 LEFT JOIN person p USING(email)
 WHERE 
-  /* Reverse the lowercase month name and take the first letter */
-  /* Use FM (Fillmode) to not get a space character as the last character*/
-  /* Then, check if that letter is 'r' */
+  /* 
+      Reverse the lowercase month name and take the first letter;
+      Use FM (Fillmode) to not get a space character as the last character
+      Then, check if that letter is 'r' 
+  */
     substr(reverse(to_char(r.period_begin,'FMmonth')),1,1) = 'r' 
   AND 
-  /* for every branch and person, calculate the sum of elements in the year field */
-  /* Next, compare both and retain those where elements are equal */
+  /* 
+    for every branch and person, calculate the sum of elements in the year field
+    Next, compare both and retain those where elements are equal
+  */
   ((substr(p.postalcode, 1, 1)::integer) + 
   (substr(p.postalcode, 2, 1)::integer) + 
   (substr(p.postalcode, 3, 1)::integer) + 
@@ -318,23 +322,31 @@ values in the column email.
 ``` sql
 SELECT DISTINCT e.email
 FROM registration r
-/* INNER JOIN ensures that the resulting table 
-is a combination of all registrations by employees */
+/* 
+  INNER JOIN ensures that the resulting table 
+  is a combination of all registrations by employees
+*/
 INNER JOIN employee e USING(email)
-/* LEFT JOIN ensures that every employee-rental is 
-matched with all contracts for that employee */
+/*
+  LEFT JOIN ensures that every employee-rental is 
+  matched with all contracts for that employee
+*/
 LEFT JOIN contract con USING(employeenumber)
 LEFT JOIN car c USING(license_plate)
-WHERE
-/* Select only if enterprisenumbers for contract and rental car are identical */
-/* Ensures that a car was rented from a branch where a contract was present */
-c.enterprisenumber = con.enterprisenumber AND
-/* Select only if the rental period lays inside the contract interval */
+/* 
+  Select only if enterprisenumbers for contract and rental car are identical 
+  Ensures that a car was rented from a branch where a contract was present
+*/
+WHERE c.enterprisenumber = con.enterprisenumber AND
+/* 
+  Select only if the rental period lays inside the contract interval
+*/
 con.period_begin <= r.period_begin AND
 con.period_end >= r.period_end
-ORDER BY
-/* Order alphabetically */
-e.email asc
+/* 
+  Order alphabetically
+*/
+ORDER BY e.email asc
 ```
 
 | email                        |
@@ -360,13 +372,19 @@ SELECT l.postalcode, l.municipality
 FROM location l
 LEFT JOIN person p USING(postalcode, municipality)
 WHERE 
-  /* If p.email is null, then the location is not 
-  used for any person in the person table */
+  /* 
+    If p.email is null, then the location is not 
+    used for any person in the person table 
+  */
   p.email is null AND
-  /* Check if first letter is B (case insensitive) */
-  /* This can also be done with the substring command */
+  /* 
+    Check if first letter is B (case insensitive)
+    This can also be done with the substring command
+  */
   l.municipality not ilike 'B%' AND
-  /* Select only even postal codes */
+  /* 
+    Select only even postal codes
+  */
   l.postalcode::integer % 2 = 0
 ```
 
@@ -389,11 +407,11 @@ SELECT
   l.postalcode,
   l.municipality,
   /*
-  calculate the difference in the length of the original string
-  whith the length of the string where every hyphen and space are removed.
-  The result is the number of spaces and hyphens in the original string. 
-  Add 1 to this result to get the number of  parts in the string.
-  Remember that removing a character is the same as replacing it with nothing.
+    calculate the difference in the length of the original string
+    whith the length of the string where every hyphen and space are removed.
+    The result is the number of spaces and hyphens in the original string. 
+    Add 1 to this result to get the number of  parts in the string.
+    Remember that removing a character is the same as replacing it with nothing.
   */
   length(l.municipality) - 
   length(replace(replace(l.municipality, '-', ''), ' ','')) + 1 as number
@@ -450,10 +468,12 @@ SELECT r1.email,
   r2.license_plate license_plate2,
   r2.period_begin period_begin2
 FROM registration r1
-  /* Join on email. however, in that case couples might be duplicated.
-  To only get unique couples, use the period_begin and make sure the first is lower
-  than the second. If both are equal, make sure that the license_plate of the
-  first comes alphabetically before the second  */
+  /* 
+    Join on email. however, in that case couples might be duplicated.
+    To only get unique couples, use the period_begin and make sure the first is lower
+    than the second. If both are equal, make sure that the license_plate of the
+    first comes alphabetically before the second
+  */
 INNER JOIN registration r2 ON r1.email = r2.email AND
   (r1.period_begin < r2.period_begin OR
   (r1.period_begin = r2.period_begin AND r1.license_plate < r2.license_plate))
