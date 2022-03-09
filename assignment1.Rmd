@@ -62,6 +62,12 @@ FROM car c
 WHERE t.name = 'cabriolet'
 ```
 
+I see three issues:
+
+1. The `type` column only adds a cars price per day to the car information. If a car's price per day is not strictly necessary (rereading the question, this seems to be the case), then the `type` table does not need to be integrated in the answer. The join on `t.name` can be removed.
+2. The `WHERE` statement will compare every car name against a fixed string. There is however no additional constraint on the column that vluaes should be only lowercase. A better way of comparing would be to compare against a string without case sensitivity. One can do this by replacing the `=` operator in the `WHERE` clause with an `ilike` clause.
+3. I see a problem with the joins. See below.
+
 In the first `INNER JOIN`, we're joining solely on a cars brand. However, in the `carmodel`-table, one brand can be linked with multiple distinct models. Imagine a car of the brand 'FIAT' in the `cars`-table . Next, imagine two carmodels in the `carmodel`-table for the FIAT brand: FIAT **Punto** and FIAT **500**. As the inner join solely joins on brand, both fiat models will be joined to only one car.
 
 If this assumption is true, than in the result of the query we will see identical numberplates linked to multiple distinct carmodels, which shouldn't be possible. I looked around and quickly found proof for this hypthesis:
@@ -88,7 +94,7 @@ WHERE t.name = 'cabriolet' AND c.license_plate = '1-IZX-389'
 
 Looking at the test-query, we see that the problematic situation encountered earlier was overcome!
 
-## Consider the following `SELECT`-query
+# Consider the following `SELECT`-query
 
 ```{sql connection = con, eval = FALSE}
 SELECT * FROM contract c1

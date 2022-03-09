@@ -64,6 +64,21 @@ FROM car c
 WHERE t.name = 'cabriolet'
 ```
 
+I see three issues:
+
+1.  The `type` column only adds a cars price per day to the car
+    information. If a car’s price per day is not strictly necessary
+    (rereading the question, this seems to be the case), then the `type`
+    table does not need to be integrated in the answer. The join on
+    `t.name` can be removed.
+2.  The `WHERE` statement will compare every car name against a fixed
+    string. There is however no additional constraint on the column that
+    vluaes should be only lowercase. A better way of comparing would be
+    to compare against a string without case sensitivity. One can do
+    this by replacing the `=` operator in the `WHERE` clause with an
+    `ilike` clause.
+3.  I see a problem with the joins. See below.
+
 In the first `INNER JOIN`, we’re joining solely on a cars brand.
 However, in the `carmodel`-table, one brand can be linked with multiple
 distinct models. Imagine a car of the brand ‘FIAT’ in the `cars`-table .
@@ -125,7 +140,7 @@ WHERE t.name = 'cabriolet' AND c.license_plate = '1-IZX-389'
 Looking at the test-query, we see that the problematic situation
 encountered earlier was overcome!
 
-## 2.1 Consider the following `SELECT`-query
+# 3 Consider the following `SELECT`-query
 
 ``` sql
 SELECT * FROM contract c1
@@ -166,7 +181,7 @@ The resulting table is thus an overview for every employee that shows
 for multiple enterprises, than there will be a row for every enterprise
 the employee has worked for.
 
-## 2.2 Draw the table
+## 3.1 Draw the table
 
 Draw the entire table that will be returned upon completion of the given
 query, starting from the example data of the contract table, given in
@@ -180,7 +195,7 @@ the appendix of this document.
 | 2              | 31/05/2022    | 30/06/2022  | 104              | null           | null          | null        | null             |
 | 3              | 01/10/2021    | 30/09/2022  | 103              | null           | null          | null        | null             |
 
-## 2.3 Draw again
+## 3.2 Draw again
 
 Suppose one removes the entire WHERE-clause from the SELECT-query. Draw,
 again, the entire table that will be returned upon completion of the
@@ -198,7 +213,7 @@ data of the contract table, given in the appendix of this document.
 | 2              | 31/05/2022    | 30/06/2022  | 104              | null           | null          | null        | null             |
 | 3              | 01/10/2021    | 30/09/2022  | 103              | null           | null          | null        | null             |
 
-## 2.4 Add a row
+## 3.3 Add a row
 
 Is it possible to add the row {employeenumber: 1, period\_begin:
 12/01/2021, period\_end: 31/01/2021, enterprisenumber: 103} to the
@@ -219,7 +234,7 @@ is met in this test row
 
 **Answer**: Yes, we can safely add the new row
 
-# 3 Imagine
+# 4 Imagine
 
 Imagine that the designers of the rollsrobin database would have left
 out the employee table from the relational schema. Instead, all data
@@ -238,9 +253,9 @@ creates new employees.
 **Answer**: I would advise against the integration of the `employee` and
 `person` tables
 
-# 4 Basic SQL
+# 5 Basic SQL
 
-## 4.1 Postal codes and month letters
+## 5.1 Postal codes and month letters
 
 Construct a list of unique email addresses of all persons who did a
 registration for which (1) the rented car is owned by a branch for which
@@ -307,7 +322,7 @@ WHERE
 | <rosie-leigh-hassall@hotmail.com> |
 | <shanique@stansall.nl>            |
 
-## 4.2 Rentals during contract time
+## 5.2 Rentals during contract time
 
 Construct a list of unique email addresses of all employees who rented a
 car at a company at which they have worked. Moreover, the first date of
@@ -358,7 +373,7 @@ ORDER BY e.email asc
 | <matthewroydon@yahoo.com>    |
 | <milou_oakden@msn.be>        |
 
-## 4.3 Unregistered locations
+## 5.3 Unregistered locations
 
 Construct a list of locations (postal code and municipality) in which
 each location (1) is not registered as a residence of a person in the
@@ -393,7 +408,7 @@ WHERE
 | 4780       | Sankt Vith     |
 | 1820       | Steenokkerzeel |
 
-## 4.4 Number of parts in municipality
+## 5.4 Number of parts in municipality
 
 Give for each location in the database (uniquely defined by postalcode
 and municipality), the number of parts that make up the name of the
@@ -445,7 +460,7 @@ FROM location l
 | 4000       | Liège                      |      1 |
 | 1400       | Nijvel                     |      1 |
 
-## 4.5 Customer pairs
+## 5.5 Customer pairs
 
 Give all possible couples of registrations that were done by the same
 person (i.e. the table that is returned by your query should contain
