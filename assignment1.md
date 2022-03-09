@@ -253,16 +253,17 @@ letter ‘r’ (in English). You may assume that all postal codes consist of
 name email of datatype varchar.
 
 ``` sql
-SELECT DISTINCT
-  p.email
+SELECT DISTINCT p.email
 FROM registration r
 LEFT JOIN car c USING(license_plate)
 LEFT JOIN branch b USING(enterprisenumber)
 LEFT JOIN person p USING(email)
 WHERE 
   /* Reverse the lowercase month name and take the first letter */
+  /* Use FM (Fillmode) to not get a space character as the last character*/
   /* Then, check if that letter is 'r' */
-  substr(reverse(to_char(r.period_begin,'month')),1,1) = 'r' AND 
+    substr(reverse(to_char(r.period_begin,'FMmonth')),1,1) = 'r' 
+  AND 
   /* for every branch and person, calculate the sum of elements in the year field */
   /* Next, compare both and retain those where elements are equal */
   ((substr(p.postalcode, 1, 1)::integer) + 
@@ -272,20 +273,36 @@ WHERE
   ((substr(b.postalcode, 1, 1)::integer) + 
   (substr(b.postalcode, 2, 1)::integer) + 
   (substr(b.postalcode, 3, 1)::integer) + 
-  (substr(b.postalcode, 4, 1)::integer))
+  (substr(b.postalcode, 4, 1)::integer)) 
 ```
 
-| email                          |
-|:-------------------------------|
-| <abdoultenny@outlook.com>      |
-| <areen-waberer@hotmail.com>    |
-| <dorian@claisse.com>           |
-| <elouise@jon.nl>               |
-| <gregory_winspear@yahoo.com>   |
-| <halima-frudd@gmail.com>       |
-| <jasmeet.rudinger@outlook.com> |
-| <maybel_quaife@mail.be>        |
-| <roberts_oattes@yahoo.com>     |
+| email                             |
+|:----------------------------------|
+| <abdoultenny@outlook.com>         |
+| <ajuni@dedomenicis.com>           |
+| <aneel.vasser@gmail.com>          |
+| <areen-waberer@hotmail.com>       |
+| <dorian@claisse.com>              |
+| <elouise@jon.nl>                  |
+| <emmy-rae@haker.be>               |
+| <fatima_shory@mail.be>            |
+| <finnegan-macavaddy@yahoo.com>    |
+| <ghitalamport@hotmail.com>        |
+| <gregory_winspear@yahoo.com>      |
+| <halima-frudd@gmail.com>          |
+| <hannah-maymycroft@msn.be>        |
+| <hidayah_atwill@yahoo.com>        |
+| <jasmeet.rudinger@outlook.com>    |
+| <kray-goldsmith@telenet.be>       |
+| <kris.kneller@telenet.be>         |
+| <laci-mai.corpes@yahoo.com>       |
+| <leyah.brobyn@mail.be>            |
+| <lilly-mai_leadbitter@gmail.com>  |
+| <marguerite_burleigh@msn.be>      |
+| <maybel_quaife@mail.be>           |
+| <roberts_oattes@yahoo.com>        |
+| <rosie-leigh-hassall@hotmail.com> |
+| <shanique@stansall.nl>            |
 
 ## 4.2 Rentals during contract time
 
@@ -343,14 +360,14 @@ SELECT l.postalcode, l.municipality
 FROM location l
 LEFT JOIN person p USING(postalcode, municipality)
 WHERE 
-  /* If p.email is null, then the location is not */
-  /* used for any person in the person table */
+  /* If p.email is null, then the location is not 
+  used for any person in the person table */
   p.email is null AND
   /* Check if first letter is B (case insensitive) */
   /* This can also be done with the substring command */
   l.municipality not ilike 'B%' AND
   /* Select only even postal codes */
-  cast(l.postalcode as integer) % 2 = 0
+  l.postalcode::integer % 2 = 0
 ```
 
 | postalcode | municipality   |
@@ -371,7 +388,15 @@ space (“ ”).
 SELECT 
   l.postalcode,
   l.municipality,
-  length(l.municipality) - length(replace(replace(l.municipality, '-', ''), ' ','')) + 1 as number
+  /*
+  calculate the difference in the length of the original string
+  whith the length of the string where every hyphen and space are removed.
+  The result is the number of spaces and hyphens in the original string. 
+  Add 1 to this result to get the number of  parts in the string.
+  Remember that removing a character is the same as replacing it with nothing.
+  */
+  length(l.municipality) - 
+  length(replace(replace(l.municipality, '-', ''), ' ','')) + 1 as number
 FROM location l
 ```
 
@@ -419,17 +444,19 @@ alphabetically strict before the value in column license\_plate of the
 second registration.
 
 ``` sql
-SELECT 
-  r1.email,
+SELECT r1.email,
   r1.license_plate license_plate1,
   r1.period_begin period_begin1,
   r2.license_plate license_plate2,
   r2.period_begin period_begin2
 FROM registration r1
-LEFT JOIN registration r2 ON r1.email = r2.email AND
+  /* Join on email. however, in that case couples might be duplicated.
+  To only get unique couples, use the period_begin and make sure the first is lower
+  than the second. If both are equal, make sure that the license_plate of the
+  first comes alphabetically before the second  */
+INNER JOIN registration r2 ON r1.email = r2.email AND
   (r1.period_begin < r2.period_begin OR
   (r1.period_begin = r2.period_begin AND r1.license_plate < r2.license_plate))
-WHERE r2.license_plate IS NOT null
 ```
 
 | email                          | license\_plate1 | period\_begin1 | license\_plate2 | period\_begin2 |
