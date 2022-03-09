@@ -9,8 +9,7 @@ WHERE
       Use FM (Fillmode) to not get a space character as the last character
       Then, check if that letter is 'r' 
   */
-    substr(reverse(to_char(r.period_begin,'FMmonth')),1,1) = 'r' 
-  AND 
+    substr(reverse(to_char(r.period_begin,'FMmonth')),1,1) = 'r' AND 
   /* 
     for every branch and person, calculate the sum of elements in the year field
     Next, compare both and retain those where elements are equal
