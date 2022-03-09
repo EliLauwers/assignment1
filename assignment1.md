@@ -150,9 +150,10 @@ SELECT * FROM contract c1
 WHERE c2.period_begin IS NULL;
 ```
 
-Explain, in your own words, what this SELECT-query achieves. You should
-not give the result table of this query or explain this query in
-technical terms, but explain what the semantical outcome is of this
+## 3.1 Explain, in your own words, what this SELECT-query achieves.
+
+You should not give the result table of this query or explain this query
+in technical terms, but explain what the semantical outcome is of this
 query when executed on data that is stored in the rollsrobin database.
 
 The asterisk sign at the start of the query means that every column from
@@ -181,7 +182,7 @@ The resulting table is thus an overview for every employee that shows
 for multiple enterprises, than there will be a row for every enterprise
 the employee has worked for.
 
-## 3.1 Draw the table
+## 3.2 Draw the table
 
 Draw the entire table that will be returned upon completion of the given
 query, starting from the example data of the contract table, given in
@@ -195,7 +196,7 @@ the appendix of this document.
 | 2              | 31/05/2022    | 30/06/2022  | 104              | null           | null          | null        | null             |
 | 3              | 01/10/2021    | 30/09/2022  | 103              | null           | null          | null        | null             |
 
-## 3.2 Draw again
+## 3.3 Draw again
 
 Suppose one removes the entire WHERE-clause from the SELECT-query. Draw,
 again, the entire table that will be returned upon completion of the
@@ -213,7 +214,7 @@ data of the contract table, given in the appendix of this document.
 | 2              | 31/05/2022    | 30/06/2022  | 104              | null           | null          | null        | null             |
 | 3              | 01/10/2021    | 30/09/2022  | 103              | null           | null          | null        | null             |
 
-## 3.3 Add a row
+## 3.4 Add a row
 
 Is it possible to add the row {employeenumber: 1, period\_begin:
 12/01/2021, period\_end: 31/01/2021, enterprisenumber: 103} to the

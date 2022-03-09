@@ -104,10 +104,8 @@ SELECT * FROM contract c1
 WHERE c2.period_begin IS NULL;
 ```
 
-Explain, in your own words, what this SELECT-query achieves. You should
-not give the result table of this query or explain this query in technical
-terms, but explain what the semantical outcome is of this query when
-executed on data that is stored in the rollsrobin database.
+## Explain, in your own words, what this SELECT-query achieves. 
+You should not give the result table of this query or explain this query in technical terms, but explain what the semantical outcome is of this query when executed on data that is stored in the rollsrobin database.
 
 The asterisk sign at the start of the query means that every column from the resulting table will be selected and that no columns will be removed.
 
