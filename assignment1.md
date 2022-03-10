@@ -245,14 +245,28 @@ table contract, originally pointing to the employee table, would then
 point to the column employeenumber in the person table. What are
 possible (dis)advantages of this approach? Explain in your own words.
 
-disadvantage: the `employeenumber` in the `person`-table must become
+Disadvantage: the `employeenumber` in the `person`-table must become
 optional, as basic customers will not have an employeenumber. In that
 sense, it is crucial that an employee can only be made with an
 employeenumber, which is a check that has to be done by the form which
 creates new employees.
 
-**Answer**: I would advise against the integration of the `employee` and
-`person` tables
+Disadvantage: As of now, personal information that is stored for regular
+persons / customers is the same as personal information stored for the
+employees. If in the future there should come a company policy to store
+more information on employees, than the `employee` table is the best
+place to store that, as every employee has personal information in the
+`person` table, with additional employee information in the `employee`
+table.
+
+Advantage: The only added value of the `employee` table is the link from
+an emailadress to an employeenumber. It might be a bit excessive to
+create and maintain an entire table for one piece of information. By
+adding one column to the `person` table, a whole table can be removed.
+
+**Answer**: Although the `employee` table can be removed with the
+addition of one column to the `person` table, I would advise against
+integrating the `employee` and `person` tables.
 
 # 5 Basic SQL
 
