@@ -264,9 +264,11 @@ an emailadress to an employeenumber. It might be a bit excessive to
 create and maintain an entire table for one piece of information. By
 adding one column to the `person` table, a whole table can be removed.
 
-**Answer**: Although the `employee` table can be removed with the
-addition of one column to the `person` table, I would advise against
-integrating the `employee` and `person` tables.
+**Answer**: The `employee` table can be removed with the addition of one
+column to the `person` table. Still, I would advise against integrating
+the `employee` and `person` tables. Future growth of the database, and
+differences in stored data for employees and customers lead to the
+choice of not integrating both tables.
 
 # 5 Basic SQL
 
