@@ -1,6 +1,33 @@
 Assignment1 - Eli Lauwers
 ================
 
+# About this document
+
+I built this document in `Rmarkdown`, while using `github` for version
+control. I’ve been trying to buid on both skills.
+
+The workflow for the SQL-snippets are as follows.
+
+1.  The SQL code is written in the five separate files.
+2.  To display and hihglight the SQL code in the report, the code is
+    read in an SQL chunk.
+3.  The SQL query itself is ran in an R chunk, using the `dbGetQuery` in
+    R which can run SQL queries in the form of character strings. The
+    SQL code is read by the `readLines` function to read the SQL query
+    from the seperate files to a character string
+4.  By running the SQL code in an R chunk, the resulting table can be
+    saved to a dataframe and to a seperate csv file.
+5.  The csv file serves no purpose in this assignment, but would be used
+    as the output to use in further data analyses.
+6.  In the report, resulting tables are printed for a maximum of 25
+    rows.
+
+Then the SQL code is read in an RMD chunk. That way, the code can be
+displayed with some highlighting in a code chunk. The actual SQL-query
+is written in an R chunk. That way, the query can be ran and immediately
+be saved to a dataframe and to a csv file. The csv files can then be
+used as output.
+
 # 1 Consider the relational schema of the `rollsbin` database
 
 ## 1.1 Is it possible to assign multiple (different) locations to the same branch? Why (not)?
