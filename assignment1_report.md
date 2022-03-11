@@ -470,6 +470,18 @@ name of the municipality. Here, a part is defined as a substring of the
 municipality that is separated from other substrings by either a hyphen
 (“-”) or a space (“ ”).
 
+Remark: Your solution should account for the fact that a municipality
+name could contain both hyphens and spaces at the same time. The hyphens
+or spaces themselves should not be counted as parts. Thereby, you may
+assume that there always is only one space or hyphen separating two
+substrings (so two substrings are always separated by simply one hyphen
+or one space, and not by multiple hyphens/spaces, or by combinations of
+hyphens/spaces.
+
+In the result table, we expect three columns with corresponding
+datatype: postalcode (varchar), municipality (varchar) and number
+(integer).
+
 **Answer**:
 
 ``` sql
@@ -530,6 +542,10 @@ However, if this value is the same for the two registrations, the value
 in column license\_plate of the first registration should come
 alphabetically strict before the value in column license\_plate of the
 second registration.
+
+In the result table, we expect five columns with corresponding datatype:
+email (varchar), license\_plate1 (varchar), period\_begin1 (date),
+license\_plate2 (varchar) and period\_begin2 (date).
 
 **Answer**:
 
