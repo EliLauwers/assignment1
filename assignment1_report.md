@@ -3,18 +3,20 @@ Assignment1 - Eli Lauwers
 
 # About this document
 
-I built this document in `Rmarkdown`, while using `github` for version
-control. I’ve been trying to buid on both skills.
+I built this document in `RMarkdown`, while using `github` for version
+control. I’ve been trying to build on both skills and this assignment
+was a good opporunity for it!
 
 The workflow for the SQL-snippets are as follows.
 
-1.  The SQL code is written in the five separate files.
-2.  To display and hihglight the SQL code in the report, the code is
-    read in an SQL chunk.
-3.  The SQL query itself is ran in an R chunk, using the `dbGetQuery` in
-    R which can run SQL queries in the form of character strings. The
-    SQL code is read by the `readLines` function to read the SQL query
-    from the seperate files to a character string
+1.  As requested, I wrote The SQL code is in five seperate files
+2.  To display and highlight the SQL code in the `RMarkdown` report, the
+    code is read in an SQL code chunk.
+3.  To get a resulting table, the SQL query itself is ran in an R chunk,
+    using the `dbGetQuery` in R which can run SQL queries in the form of
+    character strings. The SQL code is read by the `readLines` function
+    to read the SQL query from the seperate files into a character
+    string
 4.  By running the SQL code in an R chunk, the resulting table can be
     saved to a dataframe and to a seperate csv file.
 5.  The csv file serves no purpose in this assignment, but would be used
@@ -22,19 +24,13 @@ The workflow for the SQL-snippets are as follows.
 6.  In the report, resulting tables are printed for a maximum of 25
     rows.
 
-Then the SQL code is read in an RMD chunk. That way, the code can be
-displayed with some highlighting in a code chunk. The actual SQL-query
-is written in an R chunk. That way, the query can be ran and immediately
-be saved to a dataframe and to a csv file. The csv files can then be
-used as output.
-
 # 1 Consider the relational schema of the `rollsbin` database
 
 ## 1.1 Is it possible to assign multiple (different) locations to the same branch? Why (not)?
 
-This question is a bit dependent on what exactly is a branch and how it
-is related to an enterprise(name). I see two options, and I will give an
-explanation for both.
+**Reasoning**: This question is a bit dependent on what exactly is a
+branch and how it is related to an enterprise(name). I see two options,
+and I will give an explanation for both.
 
 1.  If two different numbers of `branch.enterprisenumber` are considered
     two different branches, than the answer is ‘no, multiple locations
@@ -60,10 +56,10 @@ answer follows (2)
 
 ## 1.2 Is it possible to store locations that are not linked to a branch? Why (not)?
 
-Yes, the only constraint for the `location`-table is that the pair of
-`location.postalcode` and `location.muncipality`, being the (combined)
-primary key must be unique. There is however no constraint that every
-‘location’ must be present somewhere in the `branch` table.
+**Reasoning**: Yes, the only constraint for the `location`-table is that
+the pair of `location.postalcode` and `location.muncipality`, being the
+(combined) primary key must be unique. There is however no constraint
+that every ‘location’ must be present somewhere in the `branch` table.
 
 Next, we know from the relational schema that locations are stored for
 the branches as well as for the employee working for those branches. If
@@ -76,11 +72,11 @@ branch.
 
 # 2 Suppose one wants to select all data
 
-Suppose one wants to select all data (i.e. data stored in columns
-license\_plate, enterprisenumber, brand and model) related to cars of
-type ‘cabriolet’. What is a potential issue that one may have when
-executing the following SELECT-query for this task and why? How would
-you solve this? Explain in your own words.
+**Question**: Suppose one wants to select all data (i.e. data stored in
+columns license\_plate, enterprisenumber, brand and model) related to
+cars of type ‘cabriolet’. What is a potential issue that one may have
+when executing the following SELECT-query for this task and why? How
+would you solve this? Explain in your own words.
 
 ``` sql
 SELECT DISTINCT 
@@ -91,7 +87,7 @@ FROM car c
 WHERE t.name = 'cabriolet'
 ```
 
-I see three issues:
+**Reasoning**: I see three issues:
 
 1.  The `type` column only adds a cars price per day to the car
     information. If a car’s price per day is not strictly necessary
@@ -179,13 +175,14 @@ WHERE c2.period_begin IS NULL;
 
 ## 3.1 Explain, in your own words, what this SELECT-query achieves.
 
-You should not give the result table of this query or explain this query
-in technical terms, but explain what the semantical outcome is of this
-query when executed on data that is stored in the rollsrobin database.
+**Question**: You should not give the result table of this query or
+explain this query in technical terms, but explain what the semantical
+outcome is of this query when executed on data that is stored in the
+rollsrobin database.
 
-The asterisk sign at the start of the query means that every column from
-the resulting table will be selected and that no columns will be
-removed.
+**Reasoning**: The asterisk sign at the start of the query means that
+every column from the resulting table will be selected and that no
+columns will be removed.
 
 Next, a `LEFT JOIN` is performed on the `contract`-table with itself
 with three join-conditions, where every condition must be met to perform
@@ -211,9 +208,11 @@ the employee has worked for.
 
 ## 3.2 Draw the table
 
-Draw the entire table that will be returned upon completion of the given
-query, starting from the example data of the contract table, given in
-the appendix of this document.
+**Question**: Draw the entire table that will be returned upon
+completion of the given query, starting from the example data of the
+contract table, given in the appendix of this document.
+
+**Answer**:
 
 | employeenumber | period\_begin | period\_end | enterprisenumber | employeenumber | period\_begin | period\_end | enterprisenumber |
 |----------------|---------------|-------------|------------------|----------------|---------------|-------------|------------------|
@@ -225,10 +224,13 @@ the appendix of this document.
 
 ## 3.3 Draw again
 
-Suppose one removes the entire WHERE-clause from the SELECT-query. Draw,
-again, the entire table that will be returned upon completion of the
-given query (now without the WHERE-clause), starting from the example
-data of the contract table, given in the appendix of this document.
+**Question**: Suppose one removes the entire WHERE-clause from the
+SELECT-query. Draw, again, the entire table that will be returned upon
+completion of the given query (now without the WHERE-clause), starting
+from the example data of the contract table, given in the appendix of
+this document.
+
+**Answer**:
 
 | employeenumber | period\_begin | period\_end | enterprisenumber | employeenumber | period\_begin | period\_end | enterprisenumber |
 |----------------|---------------|-------------|------------------|----------------|---------------|-------------|------------------|
@@ -243,18 +245,18 @@ data of the contract table, given in the appendix of this document.
 
 ## 3.4 Add a row
 
-Is it possible to add the row {employeenumber: 1, period\_begin:
-12/01/2021, period\_end: 31/01/2021, enterprisenumber: 103} to the
-contract table given in the appendix of this document, considering the
-relational schema of the rollsrobin database and the example data? Why
-(not)?
+**Question**: Is it possible to add the row {employeenumber: 1,
+period\_begin: 12/01/2021, period\_end: 31/01/2021, enterprisenumber:
+103} to the contract table given in the appendix of this document,
+considering the relational schema of the rollsrobin database and the
+example data? Why (not)?
 
-Yes, this is possible. For the `contracts`-table, the primary key is a
-combined key for the `contract.employeenumber`, `contract_begin` and
-`contract.period_end`, which means that the combination of those
-elements must be unique. There is a row where the employeenumber and
-begin date are equal to this row of interest, but the period ends
-differ.
+**Reasoning**: Yes, this is possible. For the `contracts`-table, the
+primary key is a combined key for the `contract.employeenumber`,
+`contract_begin` and `contract.period_end`, which means that the
+combination of those elements must be unique. There is a row where the
+employeenumber and begin date are equal to this row of interest, but the
+period ends differ.
 
 Next, there is a constraint on the `contract`-table that a new row must
 always have a begin date that is prior to the end date. That condition
@@ -264,30 +266,31 @@ is met in this test row
 
 # 4 Imagine
 
-Imagine that the designers of the rollsrobin database would have left
-out the employee table from the relational schema. Instead, all data
-related to employees would then be stored in the person table (which
-would include an extra column employeenumber). The foreign key in the
-table contract, originally pointing to the employee table, would then
-point to the column employeenumber in the person table. What are
-possible (dis)advantages of this approach? Explain in your own words.
+**Question**: Imagine that the designers of the rollsrobin database
+would have left out the employee table from the relational schema.
+Instead, all data related to employees would then be stored in the
+person table (which would include an extra column employeenumber). The
+foreign key in the table contract, originally pointing to the employee
+table, would then point to the column employeenumber in the person
+table. What are possible (dis)advantages of this approach? Explain in
+your own words.
 
-Disadvantage: the `employeenumber` in the `person`-table must become
-optional, as basic customers will not have an employeenumber. In that
-sense, it is crucial that an employee can only be made with an
-employeenumber, which is a check that has to be done by the form which
-creates new employees.
+**Reasoning**: **Disadvantage**: the `employeenumber` in the
+`person`-table must become optional, as basic customers will not have an
+employeenumber. In that sense, it is crucial that an employee can only
+be made with an employeenumber, which is a check that has to be done by
+the form which creates new employees.
 
-Disadvantage: As of now, personal information that is stored for regular
-persons / customers is the same as personal information stored for the
-employees. If in the future there should come a company policy to store
-more information on employees, than the `employee` table is the best
-place to store that, as every employee has personal information in the
-`person` table, with additional employee information in the `employee`
-table.
+**Disadvantage**: As of now, personal information that is stored for
+regular persons / customers is the same as personal information stored
+for the employees. If in the future there should come a company policy
+to store more information on employees, than the `employee` table is the
+best place to store that, as every employee has personal information in
+the `person` table, with additional employee information in the
+`employee` table.
 
-Advantage: The only added value of the `employee` table is the link from
-an emailadress to an employeenumber. It might be a bit excessive to
+**Advantage**: The only added value of the `employee` table is the link
+from an emailadress to an employeenumber. It might be a bit excessive to
 create and maintain an entire table for one piece of information. By
 adding one column to the `person` table, a whole table can be removed.
 
@@ -301,15 +304,17 @@ choice of not integrating both tables.
 
 ## 5.1 Postal codes and month letters
 
-Construct a list of unique email addresses of all persons who did a
-registration for which (1) the rented car is owned by a branch for which
-the sum of the numbers in the branches postal code (branch.postalcode)
-equals the sum of the numbers in the postal code of the person, who
-rented the car (person.postalcode), and (2) the first date of the rental
-period (registration.period\_begin) is in a month which name ends with
-letter ‘r’ (in English). You may assume that all postal codes consist of
-4 digits between 0 and 9. In the result table, we expect one column with
-name email of datatype varchar.
+**Question**: Construct a list of unique email addresses of all persons
+who did a registration for which (1) the rented car is owned by a branch
+for which the sum of the numbers in the branches postal code
+(branch.postalcode) equals the sum of the numbers in the postal code of
+the person, who rented the car (person.postalcode), and (2) the first
+date of the rental period (registration.period\_begin) is in a month
+which name ends with letter ‘r’ (in English). You may assume that all
+postal codes consist of 4 digits between 0 and 9. In the result table,
+we expect one column with name email of datatype varchar.
+
+**Answer**:
 
 ``` sql
 SELECT DISTINCT p.email
@@ -368,14 +373,16 @@ WHERE
 
 ## 5.2 Rentals during contract time
 
-Construct a list of unique email addresses of all employees who rented a
-car at a company at which they have worked. Moreover, the first date of
-the rental period should fall within the period they were working at the
-company (i.e. registration.period\_begin should be between
-contract.period\_begin and contract.period\_end, boundaries inclusive).
-In the result table, we expect one column with name email of datatype
-varchar. Order the results in this table alphabetically according to the
-values in the column email.
+**Question**: Construct a list of unique email addresses of all
+employees who rented a car at a company at which they have worked.
+Moreover, the first date of the rental period should fall within the
+period they were working at the company (i.e. registration.period\_begin
+should be between contract.period\_begin and contract.period\_end,
+boundaries inclusive). In the result table, we expect one column with
+name email of datatype varchar. Order the results in this table
+alphabetically according to the values in the column email.
+
+**Answer**:
 
 ``` sql
 SELECT DISTINCT e.email
@@ -419,11 +426,14 @@ ORDER BY e.email asc
 
 ## 5.3 Unregistered locations
 
-Construct a list of locations (postal code and municipality) in which
-each location (1) is not registered as a residence of a person in the
-database, (2) has an even postal code and (3) does not start with letter
-‘B’ (case insensitive). In the result table, we expect two columns with
-corresponding datatype: postalcode (varchar) and municipality (varchar).
+**Question**: Construct a list of locations (postal code and
+municipality) in which each location (1) is not registered as a
+residence of a person in the database, (2) has an even postal code and
+(3) does not start with letter ‘B’ (case insensitive). In the result
+table, we expect two columns with corresponding datatype: postalcode
+(varchar) and municipality (varchar).
+
+**Answer**:
 
 ``` sql
 SELECT l.postalcode, l.municipality
@@ -454,11 +464,13 @@ WHERE
 
 ## 5.4 Number of parts in municipality
 
-Give for each location in the database (uniquely defined by postalcode
-and municipality), the number of parts that make up the name of the
-municipality. Here, a part is defined as a substring of the municipality
-that is separated from other substrings by either a hyphen (“-”) or a
-space (“ ”).
+**Question**: Give for each location in the database (uniquely defined
+by postalcode and municipality), the number of parts that make up the
+name of the municipality. Here, a part is defined as a substring of the
+municipality that is separated from other substrings by either a hyphen
+(“-”) or a space (“ ”).
+
+**Answer**:
 
 ``` sql
 SELECT 
@@ -506,18 +518,20 @@ FROM location l
 
 ## 5.5 Customer pairs
 
-Give all possible couples of registrations that were done by the same
-person (i.e. the table that is returned by your query should contain
-rows consisting of two registrations that were conducted by the same
-person). Be aware of the fact that no rows may be present in your result
-that contain two identical registrations (i.e. same person, car, begin
-date and end date)! In order to prevent this, the value in column
+**Question**: Give all possible couples of registrations that were done
+by the same person (i.e. the table that is returned by your query should
+contain rows consisting of two registrations that were conducted by the
+same person). Be aware of the fact that no rows may be present in your
+result that contain two identical registrations (i.e. same person, car,
+begin date and end date)! In order to prevent this, the value in column
 period\_begin of the first registration should be chronologically strict
 before the value in column period\_begin of the second registration.
 However, if this value is the same for the two registrations, the value
 in column license\_plate of the first registration should come
 alphabetically strict before the value in column license\_plate of the
 second registration.
+
+**Answer**:
 
 ``` sql
 SELECT r1.email,
